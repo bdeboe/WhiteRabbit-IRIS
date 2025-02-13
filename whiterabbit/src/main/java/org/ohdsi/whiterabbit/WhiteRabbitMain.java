@@ -122,7 +122,7 @@ public class WhiteRabbitMain implements ActionListener, PanelsManager {
 		if (args.length == 2 && (args[0].equalsIgnoreCase("-ini") || args[0].equalsIgnoreCase("--ini")))
 			launchCommandLine(args[1]);
 		else {
-			frame = new JFrame("White Rabbit");
+			frame = new JFrame("White Rabbit - (Traverse Health)");
 
 			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -735,7 +735,10 @@ public class WhiteRabbitMain implements ActionListener, PanelsManager {
                 dbSettings.sourceType = DbSettings.SourceType.DATABASE;
                 dbSettings.user = locationsPanel.getSourceUserField();
                 dbSettings.password = locationsPanel.getSourcePasswordField();
+				dbSettings.port = locationsPanel.getSourcePortField();
                 dbSettings.server = locationsPanel.getSourceServerField();
+				dbSettings.namespace = locationsPanel.getSourceNamespaceField();
+				
                 String sourceDatabaseField = locationsPanel.getSourceDatabaseField();
                 dbSettings.database = sourceDatabaseField.trim().isEmpty() ? null : sourceDatabaseField;
 				dbSettings.dbType = dbChoice;
@@ -787,11 +790,23 @@ public class WhiteRabbitMain implements ActionListener, PanelsManager {
 				JOptionPane.showMessageDialog(frame, StringUtilities.wordWrap(message, 80), "Working folder not found", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			if (locationsPanel.isSourceDatabaseFieldEnabled() && (dbSettings.database == null || dbSettings.database.equals(""))) {
+
+			if (dbSettings.dbType == DbType.IRIS) {
+				if (locationsPanel.isSourceDatabaseFieldEnabled() && (dbSettings.namespace == null || dbSettings.namespace.equals(""))) {
+					JOptionPane.showMessageDialog(frame, StringUtilities.wordWrap("Please specify namespace", 80), "Error connecting to server",
+							JOptionPane.ERROR_MESSAGE);
+					return;	}
+				if (locationsPanel.isSourceDatabaseFieldEnabled() && (dbSettings.port == null || dbSettings.port.equals(""))) {
+						JOptionPane.showMessageDialog(frame, StringUtilities.wordWrap("Please specify port number", 80), "Error connecting to server",
+								JOptionPane.ERROR_MESSAGE);
+						return;	}	
+				}				
+			else if (locationsPanel.isSourceDatabaseFieldEnabled() && (dbSettings.database == null || dbSettings.database.equals(""))) {
 				JOptionPane.showMessageDialog(frame, StringUtilities.wordWrap("Please specify database name", 80), "Error connecting to server",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
 			if (dbSettings.server == null || dbSettings.server.equals("")) {
 				JOptionPane.showMessageDialog(frame, StringUtilities.wordWrap("Please specify the server", 80), "Error connecting to server",
 						JOptionPane.ERROR_MESSAGE);

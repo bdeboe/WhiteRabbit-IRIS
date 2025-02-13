@@ -48,6 +48,11 @@ public class LocationsPanel extends JPanel {
     public static final String NAME_DATABASE_NAME = "DatabaseName";
     public static final String LABEL_DELIMITER = "Delimiter";
     public static final String NAME_DELIMITER = "DelimiterName";
+    //IRIS
+    public static final String LABEL_NAMESPACE    = "Namespace";
+    public static final String NAME_NAMESPACE = "NamespaceName";
+    public static final String LABEL_PORT    = "Port";
+    public static final String NAME_PORT = "PortName";
 
     public static final String TOOLTIP_POSTGRESQL_SERVER = "For PostgreSQL servers this field contains the host name and database name (<host>/<database>)";
     public static final String TOOLTIP_DATABASE_SERVER = "This field contains the name or IP address of the database server";
@@ -56,10 +61,12 @@ public class LocationsPanel extends JPanel {
     private JTextField folderField;
     private JComboBox<String> sourceType;
     private JTextField sourceDelimiterField;
+    private JTextField sourceNamespaceField;
     private JTextField sourceServerField;
     private JTextField sourceUserField;
     private JTextField sourcePasswordField;
     private JTextField sourceDatabaseField;
+    private JTextField sourcePortField;
     private DbType currentDbType = null;
 
 
@@ -205,35 +212,76 @@ public class LocationsPanel extends JPanel {
     private void createDatabaseFields(String selectedSourceType) {
         sourceIsFiles = sourceIsFiles(selectedSourceType);
         sourceIsSas = sourceIsSas(selectedSourceType);
-        boolean sourceIsDatabase = sourceIsDatabase(selectedSourceType);
+        boolean sourceIsDatabase = sourceIsDatabase(selectedSourceType);       
 
-        sourcePanel.addReplacable(new JLabel(LABEL_SERVER_LOCATION));
-        sourceServerField = new JTextField("127.0.0.1");
-        sourceServerField.setName(LABEL_SERVER_LOCATION);
-        sourceServerField.setEnabled(false);
-        sourcePanel.addReplacable(sourceServerField);
-        sourcePanel.addReplacable(new JLabel(LABEL_USER_NAME));
-        sourceUserField = new JTextField("");
-        sourceUserField.setName(LABEL_USER_NAME);
-        sourceUserField.setEnabled(false);
-        sourcePanel.addReplacable(sourceUserField);
-        sourcePanel.addReplacable(new JLabel(LABEL_PASSWORD));
-        sourcePasswordField = new JPasswordField("");
-        sourcePasswordField.setName(LABEL_PASSWORD);
-        sourcePasswordField.setEnabled(false);
-        sourcePanel.addReplacable(sourcePasswordField);
-        sourcePanel.addReplacable(new JLabel(LABEL_DATABASE_NAME));
-        sourceDatabaseField = new JTextField("");
-        sourceDatabaseField.setName(LABEL_DATABASE_NAME);
-        sourceDatabaseField.setEnabled(false);
-        sourcePanel.addReplacable(sourceDatabaseField);
+        if (selectedSourceType == "IRIS")
+        {
+            //Server
+            sourcePanel.addReplacable(new JLabel(LABEL_SERVER_LOCATION));
+            sourceServerField = new JTextField("127.0.0.1");
+            sourceServerField.setName(LABEL_SERVER_LOCATION);
+            sourceServerField.setEnabled(false);
+            sourcePanel.addReplacable(sourceServerField);
+            
+            //Port
+            sourcePanel.addReplacable(new JLabel(LABEL_PORT));
+            sourcePortField = new JTextField("1972");
+            sourcePortField.setName(LABEL_PORT);           
+            sourcePanel.addReplacable(sourcePortField);                
+            
+            //Namespace    
+            sourcePanel.addReplacable(new JLabel(LABEL_NAMESPACE));
+            JTextField namespaceField = new JTextField("");
+            namespaceField.setName(NAME_NAMESPACE);
+            sourceNamespaceField = namespaceField;
+            sourceNamespaceField.setToolTipText("Enter a Namespace");
+            sourcePanel.addReplacable(sourceNamespaceField);
 
-        sourcePanel.addReplacable(new JLabel(LABEL_DELIMITER));
-        JTextField delimiterField = new JTextField(",");
-        delimiterField.setName(NAME_DELIMITER);
-        sourceDelimiterField = delimiterField;
-        sourceDelimiterField.setToolTipText("The delimiter that separates values. Enter 'tab' for tab.");
-        sourcePanel.addReplacable(sourceDelimiterField);
+            //User Name
+            sourcePanel.addReplacable(new JLabel(LABEL_USER_NAME));
+            sourceUserField = new JTextField("");
+            sourceUserField.setName(LABEL_USER_NAME);
+            sourceUserField.setEnabled(false);
+            sourcePanel.addReplacable(sourceUserField);
+
+            //Password
+            sourcePanel.addReplacable(new JLabel(LABEL_PASSWORD));
+            sourcePasswordField = new JPasswordField("");
+            sourcePasswordField.setName(LABEL_PASSWORD);
+            sourcePasswordField.setEnabled(false);
+            sourcePanel.addReplacable(sourcePasswordField);
+            
+        }
+        else
+        {
+            sourcePanel.addReplacable(new JLabel(LABEL_SERVER_LOCATION));
+            sourceServerField = new JTextField("127.0.0.1");
+            sourceServerField.setName(LABEL_SERVER_LOCATION);
+            sourceServerField.setEnabled(false);
+            sourcePanel.addReplacable(sourceServerField);
+            sourcePanel.addReplacable(new JLabel(LABEL_USER_NAME));
+            sourceUserField = new JTextField("");
+            sourceUserField.setName(LABEL_USER_NAME);
+            sourceUserField.setEnabled(false);
+            sourcePanel.addReplacable(sourceUserField);
+            sourcePanel.addReplacable(new JLabel(LABEL_PASSWORD));
+            sourcePasswordField = new JPasswordField("");
+            sourcePasswordField.setName(LABEL_PASSWORD);
+            sourcePasswordField.setEnabled(false);
+            sourcePanel.addReplacable(sourcePasswordField);
+            sourcePanel.addReplacable(new JLabel(LABEL_DATABASE_NAME));
+            sourceDatabaseField = new JTextField("");
+            sourceDatabaseField.setName(LABEL_DATABASE_NAME);
+            sourceDatabaseField.setEnabled(false);
+            sourcePanel.addReplacable(sourceDatabaseField);            
+            sourcePanel.addReplacable(new JLabel(LABEL_DELIMITER));
+            JTextField delimiterField = new JTextField(",");
+            delimiterField.setName(NAME_DELIMITER);
+            sourceDelimiterField = delimiterField;
+            sourceDelimiterField.setToolTipText("The delimiter that separates values. Enter 'tab' for tab.");
+            sourcePanel.addReplacable(sourceDelimiterField);
+        }
+
         sourceServerField.setEnabled(sourceIsDatabase);
         sourceUserField.setEnabled(sourceIsDatabase);
         sourcePasswordField.setEnabled(sourceIsDatabase);
@@ -329,7 +377,12 @@ public class LocationsPanel extends JPanel {
     public String getSourceDatabaseField() {
         return sourceDatabaseField.getText();
     }
-
+    public String getSourcePortField() {
+        return sourcePortField.getText();
+    }
+    public String getSourceNamespaceField() {
+        return sourceNamespaceField.getText();
+    }
     public boolean isSourceDatabaseFieldEnabled() {
         return sourceDatabaseField.isEnabled();
     }

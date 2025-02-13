@@ -36,7 +36,11 @@ public class DBConnector {
 		if (dbSettings.dbType.supportsStorageHandler()) {
 			return new DBConnection(dbSettings.dbType.getStorageHandler().getInstance(dbSettings), dbSettings.dbType, verbose);
 		} else {
-			return connect(dbSettings.server, dbSettings.domain, dbSettings.user, dbSettings.password, dbSettings.dbType, verbose);
+			if (dbSettings.dbType.equalsDbType(DbType.IRIS)) {
+				return connect(dbSettings.server +":"+dbSettings.port, dbSettings.namespace , dbSettings.user, dbSettings.password, dbSettings.dbType, verbose);
+			} else {
+				return connect(dbSettings.server, dbSettings.domain, dbSettings.user, dbSettings.password, dbSettings.dbType, verbose);		
+			}
 		}
 	}
 
@@ -48,6 +52,8 @@ public class DBConnector {
 			return new DBConnection(DBConnector.connectToMSSQL(server, domain, user, password), dbType, verbose);
 		else if (dbType.equalsDbType(DbType.ORACLE))
 			return new DBConnection(DBConnector.connectToOracle(server, domain, user, password), dbType, verbose);
+		else if (dbType.equalsDbType(DbType.IRIS))
+			return new DBConnection(DBConnector.connectToIRIS(server, domain, user, password), dbType, verbose);	
 		else if (dbType.equalsDbType(DbType.POSTGRESQL))
 			return new DBConnection(DBConnector.connectToPostgreSQL(server, user, password), dbType, verbose);
 		else if (dbType.equalsDbType(DbType.MS_ACCESS))
@@ -204,6 +210,22 @@ public class DBConnector {
 			return DriverManager.getConnection(url, user, password);
 		} catch (SQLException e1) {
 			throw new RuntimeException("Cannot connect to DB server: " + e1.getMessage());
+		}
+	}
+
+	public static Connection connectToIRIS(String server, String namespace, String user, String password) {
+		try {
+			Class.forName("com.intersystems.jdbc.IRISDriver");
+		} catch (ClassNotFoundException e1) {
+			throw new RuntimeException("Cannot find IRIS JDBC driver.");
+		}
+		String url="jdbc:IRIS://" + server +"/"+namespace;
+		String  uname = user;
+   		String  pass = password;
+		try {
+			return DriverManager.getConnection(url, uname, pass);
+		} catch (SQLException e1) {
+			throw new RuntimeException("Cannot connect to IRIS: " + e1.getMessage());
 		}
 	}
 

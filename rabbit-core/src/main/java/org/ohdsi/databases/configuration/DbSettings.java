@@ -40,6 +40,9 @@ public class DbSettings {
     public String schema;
     public String server;
     public String domain;
+    // IRIS
+    public String namespace;
+    public String port;
 
     // CSV file settings
     public char delimiter = ',';

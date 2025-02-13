@@ -208,6 +208,9 @@ public class DBConnection {
             String query = null;
             if (dbType == DbType.ORACLE)
                 query = "SELECT COLUMN_NAME,DATA_TYPE FROM ALL_TAB_COLUMNS WHERE table_name = '" + table + "' AND owner = '" + database.toUpperCase() + "'";
+            else if (dbType == DbType.IRIS)
+                { String[] parts = table.split("\\.");
+                query = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + parts[0] + "' AND TABLE_NAME = '" + parts[1] + "'";    }
             else if (dbType == DbType.SQL_SERVER || dbType == DbType.PDW) {
                 String trimmedDatabase = database;
                 if (database.startsWith("[") && database.endsWith("]"))
@@ -303,6 +306,9 @@ public class DBConnection {
             else if (dbType == DbType.MS_ACCESS) {
                 query = "SELECT " + "TOP " + sampleSize + " * FROM [" + table + "]";
             }
+            else if (dbType == DbType.IRIS) {
+                query = "SELECT " + "TOP " + sampleSize + " * FROM " + table;
+            }
             else if (dbType == DbType.BIGQUERY) {
                 query = "SELECT * FROM " + table + " ORDER BY RAND() LIMIT " + sampleSize;
             }
@@ -335,6 +341,11 @@ public class DBConnection {
                     "WHERE owner='" + database.toUpperCase() + "'";
         } else if (dbType == DbType.POSTGRESQL || dbType == DbType.REDSHIFT) {
             query = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" + database.toLowerCase() + "' ORDER BY table_name";
+        }
+        else if (dbType == DbType.IRIS) {
+        
+                query = "SELECT distinct  TABLE_SCHEMA || '.' ||  TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'  order by TABLE_SCHEMA";
+                
         } else if (dbType == DbType.MS_ACCESS) {
             query = "SELECT Name FROM sys.MSysObjects WHERE (Type=1 OR Type=5) AND Flags=0;";
         } else if (dbType == DbType.TERADATA) {

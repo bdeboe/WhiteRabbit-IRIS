@@ -31,7 +31,8 @@ public enum DbType {
 	 * is applied (see constructor and the normalizedName() method). This is enforced when the enum values are constructed,
 	 * and a violation of this rule will result in a DBConfigurationException being thrown.
 	 */
-	DELIMITED_TEXT_FILES("Delimited text files", null),
+	DELIMITED_TEXT_FILES("Delimited text files", null),	
+	IRIS("IRIS", "com.intersystems.jdbc.IRISDriver"),
 	MYSQL("MySQL", "com.mysql.cj.jdbc.Driver"),
 	ORACLE("Oracle", "oracle.jdbc.driver.OracleDriver"),
 	SQL_SERVER("SQL Server", "com.microsoft.sqlserver.jdbc.SQLServerDriver"),
@@ -102,7 +103,7 @@ public enum DbType {
 	 * @return Array of labels for the supported database, intended for use in a selector (like a Swing JComboBox)
 	 */
 	public static String[] pickList() {
-		return Stream.of(DELIMITED_TEXT_FILES, SAS7BDAT, MYSQL, ORACLE, SQL_SERVER, POSTGRESQL, MS_ACCESS, PDW, REDSHIFT, TERADATA, BIGQUERY, AZURE, SNOWFLAKE)
+		return Stream.of(DELIMITED_TEXT_FILES, IRIS, SAS7BDAT, MYSQL, ORACLE, SQL_SERVER, POSTGRESQL, MS_ACCESS, PDW, REDSHIFT, TERADATA, BIGQUERY, AZURE, SNOWFLAKE)
 				.map(DbType::label).toArray(String[]::new);
 	}
 

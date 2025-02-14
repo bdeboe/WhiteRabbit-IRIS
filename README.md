@@ -43,7 +43,7 @@ Getting Started
 ===============
 WhiteRabbit-IRIS
 
-1. Under the [Releases](https://github.com/OHDSI/WhiteRabbit/releases) tab, download `WhiteRabbit*.zip`
+1. Download `WhiteRabbit*.zip` 
 2. Unzip the download
 3. Double-click on `bin/whiteRabbit.bat` on Windows to start White Rabbit, and `bin/whiteRabbit` on macOS and Linux.
 
@@ -53,20 +53,8 @@ Rabbit-In-A-Hat
 
 1. Using the files downloaded for WhiteRabbit, double-click on `bin/rabbitInAHat.bat` to start Rabbit-In-A-Hat on Windows, and `bin/rabbitInAHat` on macOS and Linux.
 
-Note: on releases earlier than version 0.8.0, open the respective `WhiteRabbit.jar` or `RabbitInAHat.jar` files instead.
-
-
-Getting Involved
-=============
-* User guide and Help: [WhiteRabbit documentation](http://ohdsi.github.io/WhiteRabbit)
-* Developer questions/comments/feedback: [OHDSI Forum](http://forums.ohdsi.org/c/developers)
-* We use the [GitHub issue tracker](../../issues) for all bugs/issues/enhancements
-* If you wish to contribute, please read the documentation on [contributing](CONTRIBUTING.md)
 
 License
 =======
 WhiteRabbit is licensed under Apache License 2.0
 
-### Development status
-
-Production. This program is being used by many people.

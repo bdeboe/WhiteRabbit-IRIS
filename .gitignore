@@ -9,6 +9,7 @@ dist/
 target/
 *.class
 *.log
+*.zip
 
 # jenv file(s)
 .java-version

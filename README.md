@@ -45,13 +45,13 @@ WhiteRabbit-IRIS
 
 1. Download `WhiteRabbit*.zip` 
 2. Unzip the download
-3. Double-click on `WhiteRabbit_IRIS_v1.0.0/bin/whiteRabbit.bat` on Windows to start White Rabbit, and `bin/whiteRabbit` on macOS and Linux.
+3. Double-click on `bin/whiteRabbit.bat` on Windows to start White Rabbit, and `bin/whiteRabbit` on macOS and Linux.
 
 (See [the documentation](http://ohdsi.github.io/WhiteRabbit/WhiteRabbit.html#running-from-the-command-line) for details on how to run from the command prompt instead)
 
 Rabbit-In-A-Hat
 
-1. Using the files downloaded for WhiteRabbit, double-click on `WhiteRabbit_IRIS_v1.0.0/bin/rabbitInAHat.bat` to start Rabbit-In-A-Hat on Windows, and `bin/rabbitInAHat` on macOS and Linux.
+1. Using the files downloaded for WhiteRabbit, double-click on `bin/rabbitInAHat.bat` to start Rabbit-In-A-Hat on Windows, and `bin/rabbitInAHat` on macOS and Linux.
 
 
 License

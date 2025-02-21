@@ -6,7 +6,7 @@ Original Source: This project is derived from [WhiteRabbit](https://github.com/O
 
 Features
 ========
-- Can scan databases in **InterSysems IRIS**, SQL Server, Oracle, PostgreSQL, MySQL, MS Access, Amazon RedShift, Google BigQuery, SAS files and CSV files
+- Can scan databases in **InterSystems IRIS**, SQL Server, Oracle, PostgreSQL, MySQL, MS Access, Amazon RedShift, Google BigQuery, SAS files and CSV files
 - The scan report contains information on tables, fields, and frequency distributions of values
 - Cutoff on the minimum frequency of values to protect patient privacy
 - WhiteRabbit can be run with a graphical user interface or from the command prompt

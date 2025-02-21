@@ -312,6 +312,7 @@
                         <!-- apparently there is no license information available for sqljdbc4, even though
                         it is published on Maven repos -->
                         <exclude>com.microsoft.sqlserver:sqljdbc4</exclude>
+                        <exclude>com.intersystems:intersystems-jdbc</exclude>
                     </excludes>
                     <!-- acceptableLicenseResources>osi-widely-used</acceptableLicenseResources -->
                 </configuration>
